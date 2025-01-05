@@ -25,11 +25,11 @@ const Game = () => {
     row: null,
     col: null,
   });
-  const playerX = { value: "X", class: "bg-red-400" };
-  const playerO = { value: "O", class: "bg-blue-400" };
+  const playerX = "X";
+  const playerO = "O";
   const [player, setPlayer] = useState(playerX);
   const togglePlayer = () =>
-    setPlayer((prev) => (prev.value === "X" ? playerO : playerX));
+    setPlayer((prev) => (prev === "X" ? playerO : playerX));
   const [board, setBoard] = useState([
     ["", "", ""],
     ["", "", ""],
@@ -75,12 +75,12 @@ const Game = () => {
     if (board[row][col] !== "") return;
     playClickSound();
     const newBoard = [...board];
-    newBoard[row][col] = player.value;
+    newBoard[row][col] = player;
     setBoard(newBoard);
     // Check for a winner or draw
-    if (checkWinner(newBoard, player.value)) {
+    if (checkWinner(newBoard, player)) {
       playWinnerSound();
-      setWinner(player.value);
+      setWinner(player);
       setshowConfetti(true);
     } else if (isBoardFull(newBoard)) {
       playDrawSound();
@@ -101,7 +101,7 @@ const Game = () => {
   };
   const renderMarkerValue = (row: number, col: number, marker: string) => {
     if (marker !== "") return marker;
-    else if (hover.row === row && hover.col === col) return player.value;
+    else if (hover.row === row && hover.col === col) return player;
     else return "";
   };
   const resetGame = () => {
@@ -117,8 +117,14 @@ const Game = () => {
   };
   return (
     <>
-      <div className="relative grid grid-cols-3 bg-white">
-        {showConfetti && <Confetti recycle={false} />}
+      <div className=" grid grid-cols-3 bg-white">
+        {showConfetti && (
+          <Confetti
+            className="border border-solid border-red-500 absolute left-0 w-screen h-screen"
+            recycle={false}
+            numberOfPieces={2000}
+          />
+        )}
         <audio ref={hoverSound} src="src/assets/hover.mp3" preload="auto" />
         <audio ref={clickSound} src="src/assets/click.mp3" preload="auto" />
         <audio ref={winnerSound} src="src/assets/winner.mp3" preload="auto" />
@@ -140,7 +146,7 @@ const Game = () => {
           ))
         )}
         {winner !== "" && (
-          <div className="p-2 absolute top-0 h-full bg-black/50 rounded-lg shadow-xl w-full text-white text-4xl font-bold flex flex-col justify-center items-center">
+          <div className="p-2 absolute top-0 right-0 h-full bg-black/50 rounded-lg shadow-xl w-full text-white text-4xl font-bold flex flex-col pt-[15rem] items-center">
             {winner !== "Draw" && <p>Player {winner} wins!</p>}
             {winner === "Draw" && <p>It's a draw...</p>}
             <button

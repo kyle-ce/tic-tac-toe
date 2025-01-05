@@ -3,7 +3,7 @@ import Footer from "./Sections/Footer";
 
 function App() {
   return (
-    <main className="h-screen  pt-8 flex flex-col items-center bg-gradient-to-b to-green-500 from-green-300">
+    <main className="h-screen  pt-8 flex flex-col items-center bg-gradient-to-b to-green-500 from-green-300 overflow-hidden">
       {/* Game */}
       <section className="container max-w-[1000px] mx-5 p-8 border-solid rounded-lg shadow-xl ring-slate-400/50 bg-white ">
         <h1 className=" p-2 font-bold text-4xl  leading-6 ">Tic-Tac-Toe</h1>
