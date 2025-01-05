@@ -105,6 +105,7 @@ const Game = () => {
     else return "";
   };
   const resetGame = () => {
+    playClickSound();
     setWinner("");
     setPlayer(playerX);
     setBoard([
@@ -144,6 +145,7 @@ const Game = () => {
             {winner === "Draw" && <p>It's a draw...</p>}
             <button
               onClick={resetGame}
+              onMouseEnter={() => playHoverSound()}
               className="px-2 py-2 text-base border rounded-lg ring mt-2 bg-green-600 hover:bg-pink-600/80 hover:scale-105 duration-300 "
             >
               Play again?
